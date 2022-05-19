@@ -1,0 +1,6 @@
+data
+env
+.ipynb_checkpoints
+*.csv
+*.zip
+*.ipynb
