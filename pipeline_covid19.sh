@@ -29,3 +29,9 @@ echo "--> Haciendo la transformación y la carga de los datos en la base..."
 echo ""
 docker run --rm --name python-etl --network covid19_net \
 -v /home/jorge/pipeline_covid19/etl/data:/etl/data jdanussi/python-etl:v1
+
+echo ""
+echo "--> Generando el reporte..."
+echo ""
+docker run --rm --name python-report --network covid19_net \
+-v /home/jorge/pipeline_covid19/report/sql:/report/sql jdanussi/python-reporter:v1
