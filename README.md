@@ -507,6 +507,98 @@ El pipeline se lanza ejecutando
 
     $ bash pipeline_covid19.sh
 
+A genera el reporte que se muestra a continuación:
+
+        ==========================================================================================
+        =========     COVID-19. Casos registrados en la República Argentina año 2022     =========
+        ==========================================================================================
+        Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina 
+
+
+
+        Total de casos confirmados en el año:
+        ================================================================
+        year  total_cases
+        2022      3336351
+
+
+
+        Casos confirmados por mes:
+        ================================================================
+        registration_month  total_cases percent
+                2022-01      2673293   80.13
+                2022-02       450159   13.49
+                2022-03       126021    3.78
+                2022-04        40420    1.21
+                2022-05        46458    1.39
+
+
+
+        Casos confirmados por semana para los últimos 2 meses:
+        ================================================================
+        registration_week  total_cases
+            2022-03-28         2367
+            2022-04-04        10011
+            2022-04-11         7352
+            2022-04-18        10404
+            2022-04-25        10919
+            2022-05-02        17459
+            2022-05-09        28366
+
+
+
+        Casos confirmados en el último mes agrupados por Sexo:
+        ================================================================
+        last_registration_month  gender  total_cases percent
+                        2022-05  Female      1779365   53.33
+                        2022-05    Male      1552546   46.53
+                        2022-05 No data         4440    0.13
+
+
+
+        Casos confirmados en el último mes agrupados por Edad:
+        ================================================================
+        last_registration_month age_segment  total_cases percent
+                        2022-05        0<20       336797   10.09
+                        2022-05       20-39      1559384   46.74
+                        2022-05       40-59      1016614   30.47
+                        2022-05       60-79       364886   10.94
+                        2022-05         >80        58670    1.76
+
+
+
+        Casos confirmados en el último mes agrupados por Localidad:
+        ================================================================
+        last_registration_month          state_name  total_cases percent
+                        2022-05        Buenos Aires      1309297   39.86
+                        2022-05                CABA       424120   12.91
+                        2022-05             Córdoba       368888   11.23
+                        2022-05            Santa Fe       248843    7.58
+                        2022-05             Tucumán       107497    3.27
+                        2022-05             Mendoza        97529    2.97
+                        2022-05            San Juan        73171    2.23
+                        2022-05               Chaco        63110    1.92
+                        2022-05          Entre Ríos        59891    1.82
+                        2022-05               Salta        59621    1.82
+                        2022-05               Jujuy        53000    1.61
+                        2022-05             Formosa        50462    1.54
+                        2022-05             Neuquén        48023    1.46
+                        2022-05 Santiago del Estero        39165    1.19
+                        2022-05           Río Negro        38425    1.17
+                        2022-05            Misiones        36260    1.10
+                        2022-05          Corrientes        35542    1.08
+                        2022-05            La Pampa        35035    1.07
+                        2022-05              Chubut        32551    0.99
+                        2022-05           Catamarca        29636    0.90
+                        2022-05          Santa Cruz        25058    0.76
+                        2022-05            La Rioja        21396    0.65
+                        2022-05            San Luis        14663    0.45
+                        2022-05    Tierra del Fuego        13625    0.41
+
+
+
+
+<br>
 Las imágenes Docker utilizadas en el pipeline se encuentran publicadas en https://hub.docker.com/
 
 <br><br>
