@@ -1,4 +1,4 @@
-FROM python:3.10-slim-bullseye
+FROM python:3.10.4-slim
 
 # Run updates and install pip upgrade
 RUN apt-get update && apt-get upgrade -y

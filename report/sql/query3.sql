@@ -7,6 +7,7 @@ select
         else 'No data'
         end as gender
     ,   count(*) as total_cases
+    ,	round(count(*) / SUM(count(*)) over () * 100, 2) as percent
 from covid19_case 
 where clasification = 'Confirmado'
 group by gender
