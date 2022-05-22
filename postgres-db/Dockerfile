@@ -1,4 +1,4 @@
-FROM postgres:12.7
+FROM postgres:alpine3.15
 
 # Init script to create user/rol and database on postgres first run
 COPY init_user_db.sh /docker-entrypoint-initdb.d
