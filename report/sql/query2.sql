@@ -1,13 +1,11 @@
--- Casos confirmados por semana para los últimos 2 meses
+-- Casos confirmados por mes
 select 
-        to_char(date_trunc('week', registration_date), 'YYYY-MM-DD') as registration_week
-    ,   count(*) as total_cases
+        to_char(date_trunc('month', registration_date), 'YYYY-MM') as registration_month
+    ,   to_char(count(*), '999,999,999') as total_cases
+    --,	round(count(*) / SUM(count(*)) over () * 100, 2) as percent
+    ,   to_char(count(*) / SUM(count(*)) over () * 100, 'fm00D00 %')  as total_cases_percent
 from covid19_case
-where 
-    clasification = 'Confirmado'
-    and to_char(date_trunc('month', registration_date), 'MM') in 
-    (select distinct (to_char(date_trunc('month', registration_date), 'MM')) as u_month 
-from covid19_case order by u_month desc limit 2)
-group by registration_week
-order by registration_week asc
+where clasification = 'Confirmado' 
+group by registration_month
+order by registration_month asc
 ;

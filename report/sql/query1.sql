@@ -1,10 +1,7 @@
--- Casos confirmados por mes
+-- Total de casos confirmados en el año
 select 
-        to_char(date_trunc('month', registration_date), 'YYYY-MM') as registration_month
-    ,   count(*) as total_cases
-    ,	round(count(*) / SUM(count(*)) over () * 100, 2) as percent
-from covid19_case
-where clasification = 'Confirmado' 
-group by registration_month
-order by registration_month asc
+        '2022' as year
+    ,   to_char(count(*), '999,999,999') as total_cases
+from covid19_case 
+where clasification = 'Confirmado'
 ;

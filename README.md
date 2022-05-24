@@ -367,8 +367,9 @@ Se importan dependencias y se define la función **connect()** para conectar a l
     from config.config import config
 
     import pandas as pd
-    from pandas import DataFrame
 
+    import datetime
+    import json
     import os
 
 
@@ -403,11 +404,11 @@ Se importan dependencias y se define la función **connect()** para conectar a l
         colnames = [desc[0] for desc in cur.description]
         df.columns = colnames
 
-        print('\n' + title)
-        print("=" * 64)
-        print(df.to_string(index=False))
-        print('\n')
-
+        f.write('\n' + title + '\n') 
+        f.write("=" * 76 + '\n')
+        f.write(df.to_string(index=False))
+        f.write('\n\n')
+        
         if conn is not None:
             conn.close()
 
@@ -418,31 +419,31 @@ Y en la parte principal, se genera la salida por pantalla:
 
         BASE_DIR = os.path.dirname(os.path.abspath(__file__))
         SQL_DIR = os.path.join(BASE_DIR, 'sql/') 
+        OUTPUT_DIR = os.path.join(BASE_DIR, 'output/') 
 
-        query_list = [
-            {'title':'Total de casos confirmados en el año:',
-            'query':'query0.sql'},
-            {'title':'Casos confirmados por mes:',
-            'query':'query1.sql'},
-            {'title':'Casos confirmados por semana para los últimos 2 meses:',
-            'query':'query2.sql'},
-            {'title':'Casos confirmados en el último mes agrupados por Sexo:',
-            'query':'query3.sql'},
-            {'title':'Casos confirmados en el último mes agrupados por Edad:',
-            'query':'query4.sql'},
-            {'title':'Casos confirmados en el último mes agrupados por Localidad:',
-            'query':'query5.sql'}
-        ]
+        # Opening JSON file
+        with open('queries.json') as json_file:
+            queries = json.load(json_file)
+    
+        # Save report to file
+        report = f"{OUTPUT_DIR}report_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
-        print('\n')
-        print('==========================================================================================')
-        print('=========     COVID-19. Casos registrados en la República Argentina año 2022     =========')
-        print('==========================================================================================')
-        print('Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina ')
-        print('\n')
+        with open(report + '.txt', 'w') as f:
+            
+            f.write('\n')
+            f.write('========================================================================================= \n')
+            f.write('COVID-19. Casos registrados en la República Argentina año 2022 \n')
+            f.write('Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina \n')
+            f.write('========================================================================================= \n')
 
-        for query in query_list:
-            query_execute(query['title'], query['query'])
+            for query in queries.values():
+                query_execute(query['title'], query['query'])
+
+        # Print report to screen    
+        with open(report + '.txt', 'r') as f:
+            contents = f.read()
+            print(contents)
+
 <br><br>
 
 
@@ -493,6 +494,7 @@ Una vez finalizada la descarga, se ejecuta el contenedor **python-etl** que real
     docker run --rm --name python-etl --network covid19_net \
     -v $PWD/etl/data:/etl/data jdanussi/python-etl:v1
 
+
 Por último se ejecuta el reporte
 
     # Create and output the report
@@ -500,7 +502,11 @@ Por último se ejecuta el reporte
     echo "--> Creating the report ..."
     echo ""
     docker run --rm --name python-report --network covid19_net \
-    -v $PWD/report/sql:/report/sql jdanussi/python-reporter:v1
+    -v $PWD/report/sql:/report/sql \
+    -v $PWD/report/queries.json:/report/queries.json \
+    -v $PWD/report/output:/report/output \
+    jdanussi/python-reporter:v1
+
 <br>
 
 El pipeline se lanza ejecutando
@@ -509,97 +515,107 @@ El pipeline se lanza ejecutando
 
 A genera el reporte que se muestra a continuación:
 
-        ==========================================================================================
-        =========     COVID-19. Casos registrados en la República Argentina año 2022     =========
-        ==========================================================================================
-        Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina 
 
+        ========================================================================================= 
+        COVID-19. Casos registrados en la República Argentina año 2022 
+        Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina 
+        ========================================================================================= 
+
+        Fecha de última actualización de los datos:
+        ============================================================================
+        last_update
+        2022-05-22
 
 
         Total de casos confirmados en el año:
-        ================================================================
+        ============================================================================
         year  total_cases
-        2022      3336351
-
+        2022    3,375,343
 
 
         Casos confirmados por mes:
-        ================================================================
-        registration_month  total_cases percent
-                2022-01      2673293   80.13
-                2022-02       450159   13.49
-                2022-03       126021    3.78
-                2022-04        40420    1.21
-                2022-05        46458    1.39
-
+        ============================================================================
+        registration_month  total_cases total_cases_percent
+                2022-01    2,673,465             79.21 %
+                2022-02      450,214             13.34 %
+                2022-03      126,057             03.73 %
+                2022-04       40,504             01.20 %
+                2022-05       85,103             02.52 %
 
 
         Casos confirmados por semana para los últimos 2 meses:
-        ================================================================
+        ============================================================================
         registration_week  total_cases
-            2022-03-28         2367
-            2022-04-04        10011
-            2022-04-11         7352
-            2022-04-18        10404
-            2022-04-25        10919
-            2022-05-02        17459
-            2022-05-09        28366
-
+            2022-03-28        2,370
+            2022-04-04       10,020
+            2022-04-11        7,358
+            2022-04-18       10,413
+            2022-04-25       10,981
+            2022-05-02       17,713
+            2022-05-09       32,571
+            2022-05-16       34,181
 
 
         Casos confirmados en el último mes agrupados por Sexo:
-        ================================================================
-        last_registration_month  gender  total_cases percent
-                        2022-05  Female      1779365   53.33
-                        2022-05    Male      1552546   46.53
-                        2022-05 No data         4440    0.13
-
+        ============================================================================
+        last_registration_month  gender  total_cases total_cases_percent
+                        2022-05  Female    1,802,149             53.39 %
+                        2022-05    Male    1,568,722             46.48 %
+                        2022-05 No data        4,472             00.13 %
 
 
         Casos confirmados en el último mes agrupados por Edad:
-        ================================================================
-        last_registration_month age_segment  total_cases percent
-                        2022-05        0<20       336797   10.09
-                        2022-05       20-39      1559384   46.74
-                        2022-05       40-59      1016614   30.47
-                        2022-05       60-79       364886   10.94
-                        2022-05         >80        58670    1.76
-
+        ============================================================================
+        last_registration_month age_segment  total_cases total_cases_percent
+                        2022-05        0<20      339,036             10.04 %
+                        2022-05       20-39    1,571,903             46.57 %
+                        2022-05       40-59    1,032,776             30.60 %
+                        2022-05       60-79      371,959             11.02 %
+                        2022-05         >80       59,669             01.77 %
 
 
         Casos confirmados en el último mes agrupados por Localidad:
-        ================================================================
-        last_registration_month          state_name  total_cases percent
-                        2022-05        Buenos Aires      1309297   39.86
-                        2022-05                CABA       424120   12.91
-                        2022-05             Córdoba       368888   11.23
-                        2022-05            Santa Fe       248843    7.58
-                        2022-05             Tucumán       107497    3.27
-                        2022-05             Mendoza        97529    2.97
-                        2022-05            San Juan        73171    2.23
-                        2022-05               Chaco        63110    1.92
-                        2022-05          Entre Ríos        59891    1.82
-                        2022-05               Salta        59621    1.82
-                        2022-05               Jujuy        53000    1.61
-                        2022-05             Formosa        50462    1.54
-                        2022-05             Neuquén        48023    1.46
-                        2022-05 Santiago del Estero        39165    1.19
-                        2022-05           Río Negro        38425    1.17
-                        2022-05            Misiones        36260    1.10
-                        2022-05          Corrientes        35542    1.08
-                        2022-05            La Pampa        35035    1.07
-                        2022-05              Chubut        32551    0.99
-                        2022-05           Catamarca        29636    0.90
-                        2022-05          Santa Cruz        25058    0.76
-                        2022-05            La Rioja        21396    0.65
-                        2022-05            San Luis        14663    0.45
-                        2022-05    Tierra del Fuego        13625    0.41
-
+        ============================================================================
+        last_registration_month          state_name  total_cases total_cases_percent
+                        2022-05        Buenos Aires    1,324,121             39.84 %
+                        2022-05                CABA      438,581             13.20 %
+                        2022-05             Córdoba      372,120             11.20 %
+                        2022-05            Santa Fe      249,505             07.51 %
+                        2022-05             Tucumán      107,781             03.24 %
+                        2022-05             Mendoza       97,814             02.94 %
+                        2022-05            San Juan       73,811             02.22 %
+                        2022-05               Chaco       63,196             01.90 %
+                        2022-05          Entre Ríos       60,087             01.81 %
+                        2022-05               Salta       59,656             01.79 %
+                        2022-05               Jujuy       53,014             01.60 %
+                        2022-05             Formosa       50,490             01.52 %
+                        2022-05             Neuquén       48,108             01.45 %
+                        2022-05 Santiago del Estero       39,202             01.18 %
+                        2022-05           Río Negro       38,587             01.16 %
+                        2022-05            Misiones       37,589             01.13 %
+                        2022-05          Corrientes       36,371             01.09 %
+                        2022-05            La Pampa       36,127             01.09 %
+                        2022-05              Chubut       32,666             00.98 %
+                        2022-05           Catamarca       29,713             00.89 %
+                        2022-05          Santa Cruz       25,199             00.76 %
+                        2022-05            La Rioja       21,405             00.64 %
+                        2022-05            San Luis       14,719             00.44 %
+                        2022-05    Tierra del Fuego       13,643             00.41 %
 
 
 
 <br>
-Las imágenes Docker utilizadas en el pipeline se encuentran publicadas en https://hub.docker.com/
+
+### Docker Hub
+Las imágenes Docker utilizadas en el pipeline se encuentran publicadas en Docker Hub<br>
+https://hub.docker.com/
+
+<br>
+
+### GitHub
+
+Todo el código se puede hallar en GitHub:<br>
+https://github.com/itba-cloud-data-engineering/tpf-foundations-jdanussi
 
 <br><br>
 
@@ -613,9 +629,3 @@ Seguramente son muchas las mejoras que se pueden hacer, pero se me ocurren como 
 2. Se exponen credenciales en los Dockerfiles y en el archivo de **docker-compose.yml**. Habría que gestionar estos datos mediante variables de entorno para evitar que las credenciales queden expuestas en los repositorios.<br>
 
 3. En **etl.py** habría que incorporar un método que realice la descarga de los datasets. Actualmente esta tarea se realiza con scripts de shell por fuera del contenedor. Estaría bueno encapsular toda la función de ETL en el contendor **python-etl**.<br>
-
-4. En **etl.py** se trabajo contra la base de datos utilizando Pandas (**df.to_sql**). Sin embargo, en la eliminación de duplicados que se hace al final del script, se utiliza el engine de **sqlachemy** de forma directa. Está bien eso? Trabajar contra la base de datos de dos formas distintas dentro del mismo script?<br>
-
-5. En **report.py** se define una lista de diccionarios con los queries a ejecutar. Sería superador tener definida esa información en un archivo .json externo y no en el cuerpo del script.<br>
-
-6. Agregar a **report.py** la capacidad de generar un archivo de salida para el reporte.

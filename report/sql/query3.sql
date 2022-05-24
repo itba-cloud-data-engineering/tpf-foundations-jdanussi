@@ -1,15 +1,13 @@
--- Casos confirmados en el último mes agrupados por Sexo
+-- Casos confirmados por semana para los últimos 2 meses
 select 
-        max(to_char(date_trunc('month', registration_date), 'YYYY-MM')) as last_registration_month
-    ,   case 
-            when gender_id = 'F' then 'Female'
-            when gender_id = 'M' then 'Male'
-        else 'No data'
-        end as gender
-    ,   count(*) as total_cases
-    ,	round(count(*) / SUM(count(*)) over () * 100, 2) as percent
-from covid19_case 
-where clasification = 'Confirmado'
-group by gender
-order by total_cases desc
+        to_char(date_trunc('week', registration_date), 'YYYY-MM-DD') as registration_week
+    ,   to_char(count(*), '999,999,999') as total_cases
+from covid19_case
+where 
+    clasification = 'Confirmado'
+    and to_char(date_trunc('month', registration_date), 'MM') in 
+    (select distinct (to_char(date_trunc('month', registration_date), 'MM')) as u_month 
+from covid19_case order by u_month desc limit 2)
+group by registration_week
+order by registration_week asc
 ;

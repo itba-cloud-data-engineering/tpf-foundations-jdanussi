@@ -41,4 +41,7 @@ echo ""
 echo "--> Creating the report ..."
 echo ""
 docker run --rm --name python-report --network covid19_net \
--v $PWD/report/sql:/report/sql jdanussi/python-reporter:v1
+-v $PWD/report/sql:/report/sql \
+-v $PWD/report/queries.json:/report/queries.json \
+-v $PWD/report/output:/report/output \
+jdanussi/python-reporter:v1

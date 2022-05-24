@@ -1,16 +1,13 @@
--- Casos confirmados en el último mes agrupados por Sexo
+-- Casos confirmados en el último mes agrupados por Localidad
 select 
         max(to_char(date_trunc('month', registration_date), 'YYYY-MM')) as last_registration_month
-    ,   case 
-            when gender_id = 'F' then 'Female'
-            when gender_id = 'M' then 'Male'
-        else 'No data'
-        end as gender
+    ,   s.state_name
     ,   to_char(count(*), '999,999,999') as total_cases
-    --,	round(count(*) / SUM(count(*)) over () * 100, 2) as percent
     ,   to_char(count(*) / SUM(count(*)) over () * 100, 'fm00D00 %')  as total_cases_percent
-from covid19_case 
+from covid19_case c
+inner join state s 
+on c.residence_state_id = s.state_id
 where clasification = 'Confirmado'
-group by gender
+group by s.state_name
 order by total_cases desc
 ;
