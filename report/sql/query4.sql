@@ -7,7 +7,6 @@ select
         else 'No data'
         end as gender
     ,   to_char(count(*), '999,999,999') as total_cases
-    --,	round(count(*) / SUM(count(*)) over () * 100, 2) as percent
     ,   to_char(count(*) / SUM(count(*)) over () * 100, 'fm00D00 %')  as total_cases_percent
 from covid19_case 
 where clasification = 'Confirmado'
