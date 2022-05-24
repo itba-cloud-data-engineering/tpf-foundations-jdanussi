@@ -1,6 +1,6 @@
 -- Casos confirmados por mes
 select 
-        to_char(date_trunc('month', registration_date), 'YYYY-MM') as registration_month
+        to_char(date_trunc('month', registration_date::timestamp), 'YYYY-MM') as registration_month
     ,   to_char(count(*), '999,999,999') as total_cases
     ,   to_char(count(*) / SUM(count(*)) over () * 100, 'fm00D00 %')  as total_cases_percent
 from covid19_case

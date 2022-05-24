@@ -1,6 +1,6 @@
 -- Casos confirmados en el último mes agrupados por Localidad
 select 
-        max(to_char(date_trunc('month', registration_date), 'YYYY-MM')) as last_registration_month
+        max(to_char(date_trunc('month', registration_date::timestamp), 'YYYY-MM')) as last_registration_month
     ,   s.state_name
     ,   to_char(count(*), '999,999,999') as total_cases
     ,   to_char(count(*) / SUM(count(*)) over () * 100, 'fm00D00 %')  as total_cases_percent
