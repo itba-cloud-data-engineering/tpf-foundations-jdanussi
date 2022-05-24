@@ -1,6 +1,6 @@
 -- Casos confirmados por semana para los últimos 2 meses
 select 
-        to_char(date_trunc('week', registration_date), 'YYYY-MM-DD') as registration_week
+        to_char(date_trunc('week', registration_date::timestamp), 'YYYY-MM-DD') as registration_week
     ,   to_char(count(*), '999,999,999') as total_cases
 from covid19_case
 where 
