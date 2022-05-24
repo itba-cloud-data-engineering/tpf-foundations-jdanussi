@@ -15,6 +15,8 @@ RUN pip install -r requirements.txt
 RUN mkdir -p /report/config
 COPY /config/* /report/config/
 
+RUN mkdir -p /report/output
+
 RUN mkdir -p /report/sql
 COPY report.py .
 

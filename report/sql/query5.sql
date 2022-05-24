@@ -1,13 +1,18 @@
--- Casos confirmados en el último mes agrupados por Localidad
+-- Casos confirmados en el último mes agrupados por Edad
 select 
         max(to_char(date_trunc('month', registration_date), 'YYYY-MM')) as last_registration_month
-    ,   s.state_name
-    ,   count(*) as total_cases
-    ,   round(count(*) / SUM(count(*)) over () * 100, 2) as percent
-from covid19_case c
-inner join state s 
-on c.residence_state_id = s.state_id
+    ,   case 
+            when age < 20 then '0<20'
+            when age >= 20 and age < 40 then '20-39'
+            when age >= 40 and age < 60 then '40-59'
+            when age >= 60 and age < 80 then '60-79'
+        else '>80'
+        end as age_segment
+    ,   to_char(count(*), '999,999,999') as total_cases
+    --,   round(count(*) / SUM(count(*)) over () * 100, 2) as percent
+    ,   to_char(count(*) / SUM(count(*)) over () * 100, 'fm00D00 %')  as total_cases_percent
+from covid19_case 
 where clasification = 'Confirmado'
-group by s.state_name
-order by total_cases desc
+group by age_segment
+order by age_segment asc
 ;
