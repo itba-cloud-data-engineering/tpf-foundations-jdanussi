@@ -515,93 +515,91 @@ El pipeline se lanza ejecutando
 
 A genera el reporte que se muestra a continuación:
 
+    ========================================================================================= 
+    COVID-19. Casos registrados en la República Argentina año 2022 
+    Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina 
+    ========================================================================================= 
 
-        ========================================================================================= 
-        COVID-19. Casos registrados en la República Argentina año 2022 
-        Fuente: https://datos.gob.ar/dataset/salud-covid-19-casos-registrados-republica-argentina 
-        ========================================================================================= 
-
-        Fecha de última actualización de los datos:
-        ============================================================================
-        last_update
-        2022-05-22
-
-
-        Total de casos confirmados en el año:
-        ============================================================================
-        year  total_cases
-        2022    3,375,343
+    Fecha de última actualización de los datos:
+    ======================================================================
+    last_update
+    2022-05-22
 
 
-        Casos confirmados por mes:
-        ============================================================================
-        registration_month  total_cases total_cases_percent
-                2022-01    2,673,465             79.21 %
-                2022-02      450,214             13.34 %
-                2022-03      126,057             03.73 %
-                2022-04       40,504             01.20 %
-                2022-05       85,103             02.52 %
+    Total de casos confirmados en el año:
+    ======================================================================
+    year  total_cases
+    2022    3,375,343
 
 
-        Casos confirmados por semana para los últimos 2 meses:
-        ============================================================================
-        registration_week  total_cases
-            2022-03-28        2,370
-            2022-04-04       10,020
-            2022-04-11        7,358
-            2022-04-18       10,413
-            2022-04-25       10,981
-            2022-05-02       17,713
-            2022-05-09       32,571
-            2022-05-16       34,181
+    Casos confirmados por mes:
+    ======================================================================
+    registration_month  total_cases %_total_cases
+               2022-01    2,673,465       79.21 %
+               2022-02      450,214       13.34 %
+               2022-03      126,057       03.73 %
+               2022-04       40,504       01.20 %
+               2022-05       85,103       02.52 %
 
 
-        Casos confirmados en el último mes agrupados por Sexo:
-        ============================================================================
-        last_registration_month  gender  total_cases total_cases_percent
-                        2022-05  Female    1,802,149             53.39 %
-                        2022-05    Male    1,568,722             46.48 %
-                        2022-05 No data        4,472             00.13 %
+    Casos confirmados por semana para los últimos 2 meses:
+    ======================================================================
+    registration_week  total_cases  %_change
+           2022-03-28        2,370  000.00 %
+           2022-04-04       10,020  322.78 %
+           2022-04-11        7,358 -026.57 %
+           2022-04-18       10,413  041.52 %
+           2022-04-25       10,981  005.45 %
+           2022-05-02       17,713  061.31 %
+           2022-05-09       32,571  083.88 %
+           2022-05-16       34,181  004.94 %
 
 
-        Casos confirmados en el último mes agrupados por Edad:
-        ============================================================================
-        last_registration_month age_segment  total_cases total_cases_percent
-                        2022-05        0<20      339,036             10.04 %
-                        2022-05       20-39    1,571,903             46.57 %
-                        2022-05       40-59    1,032,776             30.60 %
-                        2022-05       60-79      371,959             11.02 %
-                        2022-05         >80       59,669             01.77 %
+    Casos confirmados en el último mes agrupados por Sexo:
+    ======================================================================
+    last_registration_month  gender  total_cases %_total_cases
+                    2022-05  Female    1,802,149       53.39 %
+                    2022-05    Male    1,568,722       46.48 %
+                    2022-05 no_data        4,472       00.13 %
 
 
-        Casos confirmados en el último mes agrupados por Localidad:
-        ============================================================================
-        last_registration_month          state_name  total_cases total_cases_percent
-                        2022-05        Buenos Aires    1,324,121             39.84 %
-                        2022-05                CABA      438,581             13.20 %
-                        2022-05             Córdoba      372,120             11.20 %
-                        2022-05            Santa Fe      249,505             07.51 %
-                        2022-05             Tucumán      107,781             03.24 %
-                        2022-05             Mendoza       97,814             02.94 %
-                        2022-05            San Juan       73,811             02.22 %
-                        2022-05               Chaco       63,196             01.90 %
-                        2022-05          Entre Ríos       60,087             01.81 %
-                        2022-05               Salta       59,656             01.79 %
-                        2022-05               Jujuy       53,014             01.60 %
-                        2022-05             Formosa       50,490             01.52 %
-                        2022-05             Neuquén       48,108             01.45 %
-                        2022-05 Santiago del Estero       39,202             01.18 %
-                        2022-05           Río Negro       38,587             01.16 %
-                        2022-05            Misiones       37,589             01.13 %
-                        2022-05          Corrientes       36,371             01.09 %
-                        2022-05            La Pampa       36,127             01.09 %
-                        2022-05              Chubut       32,666             00.98 %
-                        2022-05           Catamarca       29,713             00.89 %
-                        2022-05          Santa Cruz       25,199             00.76 %
-                        2022-05            La Rioja       21,405             00.64 %
-                        2022-05            San Luis       14,719             00.44 %
-                        2022-05    Tierra del Fuego       13,643             00.41 %
+    Casos confirmados en el último mes agrupados por Edad:
+    ======================================================================
+    last_registration_month age_segment  total_cases %_total_cases
+                    2022-05        0<20      339,036       10.04 %
+                    2022-05       20-39    1,571,903       46.57 %
+                    2022-05       40-59    1,032,776       30.60 %
+                    2022-05       60-79      371,959       11.02 %
+                    2022-05         >80       59,669       01.77 %
 
+
+    Casos confirmados en el último mes agrupados por Localidad:
+    ======================================================================
+    last_registration_month          state_name  total_cases %_total_cases
+                    2022-05        Buenos Aires    1,324,121       39.84 %
+                    2022-05                CABA      438,581       13.20 %
+                    2022-05             Córdoba      372,120       11.20 %
+                    2022-05            Santa Fe      249,505       07.51 %
+                    2022-05             Tucumán      107,781       03.24 %
+                    2022-05             Mendoza       97,814       02.94 %
+                    2022-05            San Juan       73,811       02.22 %
+                    2022-05               Chaco       63,196       01.90 %
+                    2022-05          Entre Ríos       60,087       01.81 %
+                    2022-05               Salta       59,656       01.79 %
+                    2022-05               Jujuy       53,014       01.60 %
+                    2022-05             Formosa       50,490       01.52 %
+                    2022-05             Neuquén       48,108       01.45 %
+                    2022-05 Santiago del Estero       39,202       01.18 %
+                    2022-05           Río Negro       38,587       01.16 %
+                    2022-05            Misiones       37,589       01.13 %
+                    2022-05          Corrientes       36,371       01.09 %
+                    2022-05            La Pampa       36,127       01.09 %
+                    2022-05              Chubut       32,666       00.98 %
+                    2022-05           Catamarca       29,713       00.89 %
+                    2022-05          Santa Cruz       25,199       00.76 %
+                    2022-05            La Rioja       21,405       00.64 %
+                    2022-05            San Luis       14,719       00.44 %
+                    2022-05    Tierra del Fuego       13,643       00.41 %
 
 
 <br>

@@ -40,7 +40,7 @@ def query_execute(title, query):
     df.columns = colnames
 
     f.write('\n' + title + '\n') 
-    f.write("=" * 76 + '\n')
+    f.write("=" * 70 + '\n')
     f.write(df.to_string(index=False))
     f.write('\n\n')
     
