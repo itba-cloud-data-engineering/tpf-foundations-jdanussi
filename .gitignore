@@ -1,0 +1,6 @@
+report/output/*.txt
+postgres-data/
+env/
+__pycache__/
+*.csv
+

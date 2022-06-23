@@ -1,0 +1,30 @@
+{
+    "query0":{
+        "title":"Fecha de última actualización de los datos:",
+        "query":"query0.sql"
+    },      
+    "query1":{
+        "title":"Total de casos confirmados en el año:",
+        "query":"query1.sql"
+    },
+    "query2":{
+        "title":"Casos confirmados por mes:",
+        "query":"query2.sql"
+    },
+    "query3":{
+        "title":"Casos confirmados por semana para los últimos 2 meses:",
+        "query":"query3.sql"
+    },
+    "query4":{
+        "title":"Casos confirmados en el último mes agrupados por Sexo:",
+        "query":"query4.sql"
+    },
+    "query5":{
+        "title":"Casos confirmados en el último mes agrupados por Edad:",
+        "query":"query5.sql"
+    },
+    "query6":{
+        "title":"Casos confirmados en el último mes agrupados por Localidad:",
+        "query":"query6.sql"
+    }
+}
